@@ -18,6 +18,8 @@ readonly class WeatherData
 
     public function __toString(): string
     {
-        return "Weather report: city - Minsk, Temperature - {$this->temperature}°C";
+        return "Weather report: city - Minsk, " .
+               "time (UTC) - {$this->dateTime->format('H:i')}, " .
+               "temperature - {$this->temperature}°C";
     }
 }
