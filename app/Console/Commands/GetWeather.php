@@ -20,6 +20,7 @@ class GetWeather extends Command
 
     public function handle(): void
     {
+        sleep(2);
         $weatherData = $this->weatherProvider->getCurrentWeather();
 
         Log::info($weatherData);
