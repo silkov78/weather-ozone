@@ -4,6 +4,7 @@ use Illuminate\Foundation\Console\ClosureCommand;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use \Illuminate\Support\Facades\Schedule;
+use \App\Jobs\GetWeatherJob;
 
 Artisan::command('inspire', function () {
     /** @var ClosureCommand $this */
@@ -11,4 +12,4 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // Schedule
-Schedule::command('app:get-weather')->everyTenSeconds();
+Schedule::job(new GetWeatherJob())->everyTenSeconds();
