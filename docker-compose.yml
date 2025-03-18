@@ -1,7 +1,7 @@
 services:
     laravel.test:
         build:
-            context: './docker/8.4'
+            context: './docker/8.2'
             dockerfile: Dockerfile
             args:
                 WWWGROUP: '${WWWGROUP}'
@@ -27,6 +27,7 @@ services:
             - meilisearch
             - mailpit
             - selenium
+            - rabbitmq
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -100,6 +101,19 @@ services:
             - '/dev/shm:/dev/shm'
         networks:
             - sail
+    rabbitmq:
+        image: rabbitmq:4-management
+        ports:
+            - '${RABBITMQ_PORT}:5672'
+#            - '${RABBITMQ_WEBPAGE_PORT}:15672'
+        environment:
+            RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER}'
+            RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD}'
+        volumes:
+            - 'sail-rabbitmq:/var/lib/rabbitmq'
+        networks:
+            - sail
+
 networks:
     sail:
         driver: bridge
@@ -109,4 +123,6 @@ volumes:
     sail-redis:
         driver: local
     sail-meilisearch:
+        driver: local
+    sail-rabbitmq:
         driver: local
