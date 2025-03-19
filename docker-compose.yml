@@ -105,7 +105,7 @@ services:
         image: rabbitmq:4-management
         ports:
             - '${RABBITMQ_PORT}:5672'
-#            - '${RABBITMQ_WEBPAGE_PORT}:15672'
+            - '${RABBITMQ_WEBPAGE_PORT}:15672'
         environment:
             RABBITMQ_DEFAULT_USER: '${RABBITMQ_USER}'
             RABBITMQ_DEFAULT_PASS: '${RABBITMQ_PASSWORD}'
