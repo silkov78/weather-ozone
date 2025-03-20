@@ -21,19 +21,19 @@ services:
             - '.:/var/www/html'
         networks:
             - sail
-        depends_on:
-            redis:
-                condition: service_healthy
-            meilisearch:
-                condition: service_healthy
-            mysql:
-                condition: service_healthy
-            rabbitmq:
-                condition: service_healthy
-            mailpit:
-                condition: service_started
-            selenium:
-                condition: service_started
+#        depends_on:
+#            redis:
+#                condition: service_healthy
+#            meilisearch:
+#                condition: service_healthy
+#            mysql:
+#                condition: service_healthy
+#            rabbitmq:
+#                condition: service_healthy
+#            mailpit:
+#                condition: service_started
+#            selenium:
+#                condition: service_started
 
     mysql:
         image: 'mysql/mysql-server:8.0'
