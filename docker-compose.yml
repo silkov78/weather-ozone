@@ -22,12 +22,19 @@ services:
         networks:
             - sail
         depends_on:
-            - mysql
-            - redis
-            - meilisearch
-            - mailpit
-            - selenium
-            - rabbitmq
+            redis:
+                condition: service_healthy
+            meilisearch:
+                condition: service_healthy
+            mysql:
+                condition: service_healthy
+            rabbitmq:
+                condition: service_healthy
+            mailpit:
+                condition: service_started
+            selenium:
+                condition: service_started
+
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -113,6 +120,10 @@ services:
             - 'sail-rabbitmq:/var/lib/rabbitmq'
         networks:
             - sail
+        healthcheck:
+            test: ['CMD', 'rabbitmqctl', 'status']
+            retries: 3
+            timeout: 5s
 
 networks:
     sail:
