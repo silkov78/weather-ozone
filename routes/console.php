@@ -12,4 +12,6 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // Schedule
-Schedule::job(new GetWeatherJob())->everyTenSeconds();
+Schedule::job(
+    new GetWeatherJob(), connection: 'rabbitmq_weather'
+)->everyTenSeconds();
