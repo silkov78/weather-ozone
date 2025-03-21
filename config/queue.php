@@ -74,6 +74,7 @@ return [
 
         'rabbitmq_weather' => [
             'driver' => 'rabbitmq',
+            'queue' => env('RABBITMQ_WEATHER_QUEUE', 'default'),
             'hosts' => [
                 [
                     'host' => env('RABBITMQ_HOST', 'rabbitmq'),
