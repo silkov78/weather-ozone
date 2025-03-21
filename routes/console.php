@@ -13,5 +13,5 @@ Artisan::command('inspire', function () {
 
 // Schedule
 Schedule::job(
-    new GetWeatherJob(), connection: 'rabbitmq_weather'
+    new GetWeatherJob(), 'weather', 'rabbitmq_weather'
 )->everyTenSeconds();
