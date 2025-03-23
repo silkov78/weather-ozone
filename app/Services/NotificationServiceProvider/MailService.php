@@ -4,14 +4,19 @@ declare(strict_types=1);
 
 namespace App\Services\NotificationServiceProvider;
 
-enum MailService: int
+enum MailService: string
 {
-    case EMAIL = 1;
-    case TELEGRAM = 2;
-    case UNDEFINED = 0;
+    case EMAIL = 'email';
+    case TELEGRAM = 'telegram';
+    case UNDEFINED = 'undefined';
 
-    public static function fromMailServiceName(int $mailServiceName): self
+    public static function fromString(string $mailService): self
     {
-        return self::tryFrom($mailServiceName) ?? self::UNDEFINED;
+        return self::tryFrom($mailService) ?? self::UNDEFINED;
+    }
+
+    public function toString(): string
+    {
+        return $this->value;
     }
 }

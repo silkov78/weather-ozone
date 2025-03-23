@@ -18,6 +18,6 @@ readonly class NotificationData
     {
         return "UserId: {$this->userId}, " .
                "message: {$this->message}, " .
-               "mailService: {$this->mailService}";
+               "mailService: {$this->mailService->toString()}";
     }
 }

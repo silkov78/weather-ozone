@@ -11,7 +11,11 @@ class NotificationProvider
         $dateTime = new \DateTime();
         $userId = random_int(0, 100);
         $message = "Hello, user {$userId}!";
-        $mailService = MailService::fromMailServiceName(random_int(1, 2));
+
+        $mailServices = ['email', 'telegram'];
+        $mailService = MailService::fromString(
+            $mailServices[random_int(0, 1)]
+        );
 
         return new NotificationData(
             $dateTime, $userId, $message, $mailService
