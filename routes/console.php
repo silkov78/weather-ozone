@@ -16,3 +16,5 @@ Artisan::command('inspire', function () {
 Schedule::job(
     GetWeatherJob::class, 'weather', 'rabbitmq_weather'
 )->everyTenSeconds();
+
+Schedule::job(SendNotificationJob::class)->everyTenSeconds();

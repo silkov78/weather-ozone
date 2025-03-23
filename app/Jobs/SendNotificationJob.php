@@ -13,23 +13,27 @@ class SendNotificationJob implements ShouldQueue
 {
     use Queueable;
 
+    private NotificationData $notification;
+
     /**
      * Create a new job instance.
      */
-    public function __construct()
+    public function __construct(NotificationProvider $provider)
     {
+        // Publisher execution
+        $this->notification = $provider->prepareNotification();
+
+        $this->onConnection('rabbitmq_notification');
+        $this->onQueue($this->notification->mailService->toString());
     }
 
     /**
      * Execute the job.
      */
-    public function handle(NotificationProvider $provider): void
+    public function handle(): void
     {
-        $notification = $provider->prepareNotification();
-        $this->onConnection('rabbitmq_notification');
-        $this->onQueue('email');
-
+        // Consumer executing
         sleep(3);
-        Log::info($notification);
+        Log::info($this->notification);
     }
 }

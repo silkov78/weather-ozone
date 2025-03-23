@@ -85,6 +85,40 @@ return [
                 ],
             ],
         ],
+
+        'rabbitmq_notification' => [
+            'driver' => 'rabbitmq',
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', 'rabbitmq'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'guest'),
+                    'password' => env('RABBITMQ_PASSWORD', 'guest'),
+                    'vhost' => env('RABBITMQ_VHOST', '/'),
+                ],
+            ],
+            'queue' => env('RABBITMQ_QUEUE', 'default'), // Default queue, we'll override this
+            'options' => [
+                'exchange' => [
+                    'name' => 'notifications',
+                    'type' => 'direct',
+                    'declare' => true,
+                    'durable' => true,
+                ],
+                'queue' => [
+                    'declare' => true,
+                    'durable' => true,
+                    'queues' => [
+                        'email' => [
+                            'routing_keys' => ['email'],
+                        ],
+                        'telegram' => [
+                            'routing_keys' => ['telegram'],
+                        ],
+                    ],
+                ],
+            ],
+        ],
     ],
 
     /*
