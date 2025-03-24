@@ -97,17 +97,14 @@ return [
                     'vhost' => env('RABBITMQ_VHOST', '/'),
                 ],
             ],
-
-//            Попытка настроить notification_exchange.
-//            Если раскоментировать, то очереди email и telegram не появяться вовсе.
-//            Инициализация очередей настроена в SendNotificationJob.
-
-//            'options' => [
-//                'queue'=> [
-//                    'exchange' => 'notification_exchange',
-//                    'exchange_type' => 'direct',
-//                ],
-//            ],
+            'options' => [
+                'queue'=> [
+                    'exchange' => 'notification_exchange',
+                    'exchange_type' => 'direct',
+                    // routing_key не указан, поэтому в качестве него
+                    // используется название одноимённой очереди
+                ],
+            ],
         ],
     ],
 

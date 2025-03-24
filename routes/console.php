@@ -17,4 +17,4 @@ Schedule::job(
     GetWeatherJob::class, 'weather', 'rabbitmq_weather'
 )->everyTenSeconds();
 
-Schedule::job(SendNotificationJob::class)->everyThirtySeconds();
+Schedule::job(SendNotificationJob::class)->everyTenSeconds();

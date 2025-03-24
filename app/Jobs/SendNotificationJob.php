@@ -23,6 +23,7 @@ class SendNotificationJob implements ShouldQueue
         // Publisher execution
         $this->notification = $provider->prepareNotification();
 
+        // имя очереди (telegram or email) извлекается из объекта notification
         $this->onConnection('rabbitmq_notification');
         $this->onQueue($this->notification->mailService->toString());
     }
