@@ -74,6 +74,7 @@ return [
 
         'rabbitmq_weather' => [
             'driver' => 'rabbitmq',
+            'queue' => env('RABBITMQ_WEATHER_QUEUE', 'default'),
             'hosts' => [
                 [
                     'host' => env('RABBITMQ_HOST', 'rabbitmq'),
@@ -81,6 +82,25 @@ return [
                     'user' => env('RABBITMQ_USER', 'guest'),
                     'password' => env('RABBITMQ_PASSWORD', 'guest'),
                     'vhost' => env('RABBITMQ_VHOST', '/'),
+                ],
+            ],
+        ],
+
+        'rabbitmq_notification' => [
+            'driver' => 'rabbitmq',
+            'hosts' => [
+                [
+                    'host' => env('RABBITMQ_HOST', 'rabbitmq'),
+                    'port' => env('RABBITMQ_PORT', 5672),
+                    'user' => env('RABBITMQ_USER', 'guest'),
+                    'password' => env('RABBITMQ_PASSWORD', 'guest'),
+                    'vhost' => env('RABBITMQ_VHOST', '/'),
+                ],
+            ],
+            'options' => [
+                'queue'=> [
+                    'exchange' => 'notification_exchange',
+                    'exchange_type' => 'direct',
                 ],
             ],
         ],

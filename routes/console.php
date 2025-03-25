@@ -5,6 +5,7 @@ use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 use \Illuminate\Support\Facades\Schedule;
 use \App\Jobs\GetWeatherJob;
+use \App\Jobs\SendNotificationJob;
 
 Artisan::command('inspire', function () {
     /** @var ClosureCommand $this */
@@ -13,5 +14,7 @@ Artisan::command('inspire', function () {
 
 // Schedule
 Schedule::job(
-    new GetWeatherJob(), connection: 'rabbitmq_weather'
+    GetWeatherJob::class, 'weather', 'rabbitmq_weather'
 )->everyTenSeconds();
+
+Schedule::job(SendNotificationJob::class)->everyTenSeconds();
