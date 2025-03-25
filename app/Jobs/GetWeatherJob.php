@@ -23,7 +23,6 @@ class GetWeatherJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Artisan::call('app:get-queue-size');
         Artisan::call('app:get-weather');
     }
 }
