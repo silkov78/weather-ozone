@@ -27,6 +27,6 @@ class GetWeatherJob implements ShouldQueue
     {
         sleep(3);
 
-        Log::info($this->weatherData);
+//        Log::info($this->weatherData);
     }
 }
