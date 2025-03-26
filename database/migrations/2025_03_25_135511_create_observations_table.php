@@ -14,9 +14,10 @@ return new   class extends Migration
     {
         Schema::create('observations', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('observation_datetime');
+            $table->dateTime('datetime');
             $table->decimal('temperature', 4, 2);
             $table->integer('cloud_cover');
+            // Хранит коды погоды в строковом виде ('0', '1', '2' ...)
             $table->enum(
                 'weather_code', array_column(WeatherCode::cases(), 'value')
             );
