@@ -72,9 +72,9 @@ return [
             'after_commit' => false,
         ],
 
-        'rabbitmq_weather' => [
+        'rabbitmq_ozone' => [
             'driver' => 'rabbitmq',
-            'queue' => env('RABBITMQ_WEATHER_QUEUE', 'default'),
+            'queue' => env('RABBITMQ_OZONE_QUEUE', 'default'),
             'hosts' => [
                 [
                     'host' => env('RABBITMQ_HOST', 'rabbitmq'),

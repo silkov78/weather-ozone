@@ -35,6 +35,6 @@ class SendNotificationJob implements ShouldQueue
     {
         // Consumer executing
         sleep(3);
-        Log::info($this->notification);
+//        Log::info($this->notification);
     }
 }
