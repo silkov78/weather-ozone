@@ -29,10 +29,9 @@ readonly class OzoneProvider
 
     private function calculateOzoneValue(WeatherData $weather): float
     {
-        $randValue = random_int(240, 400);
         $temperature = $weather->temperature * 0.3;
         $cloudCover = $weather->cloudCover / 100;
 
-        return round($randValue + $temperature + $cloudCover, 2);
+        return round(274.5 + $temperature + $cloudCover, 2);
     }
 }
