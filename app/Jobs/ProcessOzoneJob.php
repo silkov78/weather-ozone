@@ -24,8 +24,9 @@ class ProcessOzoneJob implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function handle(OzoneProvider $ozoneProvider): void
     {
-        Artisan::call('app:process-ozone');
+        $ozoneProvider->processWeatherAndOzone();
+        Log::info('Ozone processed');
     }
 }
