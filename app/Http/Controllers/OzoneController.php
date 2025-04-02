@@ -10,7 +10,12 @@ class OzoneController extends Controller
 {
     public function index(): string
     {
-        $observations = Observation::all()->last();
-        return response()->json($observations);
+        $lastObservation = Observation::all()->last();
+
+        if (! $lastObservation) {
+            return response()->json(['message' => 'No observations found'], 404);
+        }
+
+        return response()->json($lastObservation);
     }
 }
