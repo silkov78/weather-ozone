@@ -8,8 +8,9 @@ use Illuminate\Routing\Controller;
 
 class OzoneController extends Controller
 {
-    public function index(): array
+    public function index(): string
     {
-        return Observation::all()->toArray();
+        $observations = Observation::all()->last();
+        return response()->json($observations);
     }
 }
