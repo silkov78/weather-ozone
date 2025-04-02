@@ -7,4 +7,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/observations', [OzoneController::class, 'index'])->name('observations');
+// Observations routes
+Route::prefix('observations')->group(function () {
+    Route::controller(OzoneController::class)->group(function () {
+        Route::name('observations.')->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+    });
+});
