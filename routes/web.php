@@ -8,10 +8,11 @@ Route::get('/', function () {
 });
 
 // Observations routes
-Route::prefix('observations')->group(function () {
+Route::prefix('api/observations')->group(function () {
     Route::controller(OzoneController::class)->group(function () {
         Route::name('observations.')->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/filter', 'filterByDate')->name('filter');
         });
     });
 });

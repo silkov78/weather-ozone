@@ -27,21 +27,25 @@ class OzoneController extends Controller
 
     /*
      * Получает из запроса начальную и конечную дату и фильтрует данные по ним.
+     * Если запрос содержит невалидные данные,
+     * переадресует на последнюю посещённую страницу.
      */
     public function filterByDate(Request $request): JsonResponse
     {
-        $request->validate([
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
+        $validatedData = $request->validate([
+            'start_date' => 'required|date|date_format:Y-m-d',
+            'end_date' => 'required|date|date_format:Y-m-d|after_or_equal:start_date',
         ]);
 
-        $startDate = new \DateTime($request->input('start_date'));
-        $endDate = new \DateTime($request->input('end_date'));
+        dump($validatedData);
+
+        $startDate = new \DateTime($validatedData['start_date']);
+        $endDate = new \DateTime($validatedData['end_date']);
 
         $observations = Observation::whereBetween('datetime', [$startDate, $endDate])->get();
 
         if (! $observations) {
-            return response()->json(['message' => 'No observations found'], 404);
+            return response()->json(['message' => 'No observations found']);
         }
 
         return response()->json($observations);
