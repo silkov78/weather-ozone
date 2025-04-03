@@ -22,7 +22,7 @@ class Observation extends Model
     ];
 
     protected $casts = [
-        'datetime' => 'datetime',
+        'datetime' => 'datetime:Y-m-d H:i:s',
         'temperature' => 'float',
         'cloud_cover' => 'int',
         'weather_code' => WeatherCode::class,
