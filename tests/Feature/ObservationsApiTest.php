@@ -3,9 +3,8 @@
 namespace Tests\Feature;
 
 use App\Models\Observation;
-use App\Services\WeatherServiceProvider\Enums\WeatherCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Tests\TestCase;
 
 class ObservationsApiTest extends TestCase
@@ -77,11 +76,23 @@ class ObservationsApiTest extends TestCase
         ]);
     }
 
-    public function test_filter_by_date_method_without_query_params(): void
+    public static function invalidQueryParamsCases(): array
     {
-        $response = $this->get(
-            '/api/observations/filter'
-        );
+        return [
+            'empty query params' => [''],
+            'without start_date' => ['?end_date=2030-12-31'],
+            'without end_date' => ['?start_date=2010-12-31'],
+            'end_date before start_date' => ['?start_date=2030-01-01&end_date=2020-12-31'],
+            'not date type' => ['?start_date=2030-01-01adf&end_date=5'],
+            'invalid date format' => ['?start_date=2020.01.01&end_date=2030.12.31'],
+        ];
+    }
+
+    #[DataProvider('invalidQueryParamsCases')]
+    public function test_filter_by_date_method_with_invalid_query($queryString): void
+    {
+        $url = '/api/observations/filter' . $queryString;
+        $response = $this->get('/api/observations/filter' . $queryString);
 
         $response->assertStatus(400);
         $response->assertJsonFragment([
