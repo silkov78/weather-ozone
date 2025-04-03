@@ -13,7 +13,7 @@ Route::controller(ObservationsApiController::class)->group(function () {
       Route::name('observations.')->group(function () {
 
           Route::get('/', 'index')->name('index');
-
+          Route::get('/filter', 'filterByDate')->name('filter');
       });
    });
 });
