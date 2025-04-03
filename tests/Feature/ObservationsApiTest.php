@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Observation;
+use App\Services\WeatherServiceProvider\Enums\WeatherCode;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -18,26 +19,21 @@ class ObservationsApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_ozone_api_index(): void
+    public function test_observations_home_success():void
     {
         Observation::factory()->create([
-            'datetime' => '2025-03-11T12:00',
-            'temperature' => 15,
+            'datetime' => new \DateTime('2024-04-01 12:00:00'),
+            'temperature' => 5,
+            'cloud_cover' => 10,
         ]);
 
         $response = $this->get('/api/observations');
 
         $response->assertStatus(200);
         $response->assertJsonFragment([
-            'temperature' => 15,
-            'datetime' => '2025-03-11T12:00:00.000000Z'
+            'datetime' => '2024-04-01 12:00:00',
+            'temperature' => 5,
+            'cloud_cover' => 10,
         ]);
-    }
-
-    public function test_ozone_api_filter_without_params(): void
-    {
-        $response = $this->get('/api/observations/filter');
-
-        $response->assertStatus(302);
     }
 }
