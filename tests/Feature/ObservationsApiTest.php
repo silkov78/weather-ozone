@@ -19,7 +19,7 @@ class ObservationsApiTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test_observations_home_success():void
+    public function test_index_method_success(): void
     {
         Observation::factory()->create([
             'datetime' => new \DateTime('2024-04-01 12:00:00'),
@@ -36,4 +36,15 @@ class ObservationsApiTest extends TestCase
             'cloud_cover' => 10,
         ]);
     }
+
+    public function test_index_method_with_empty_db(): void
+    {
+        $response = $this->get('/api/observations');
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'message' => 'Observations are not found.'
+        ]);
+    }
+
 }
