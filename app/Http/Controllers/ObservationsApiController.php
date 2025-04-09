@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Resources\ObservationResource;
+use App\Http\Resources\ObservationResourceCollection;
 use App\Models\Observation;
 use \Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
@@ -35,7 +36,9 @@ class ObservationsApiController
      * Возвращает наблюдения из заданного временного отрезка.
      * start_date и end_date приходят в строке запроса.
      */
-    public function filterByDate(Request $request): JsonResponse
+    public function filterByDate(
+        Request $request
+    ): ObservationResourceCollection|JsonResponse
     {
         try {
             $validatedData = $request->validate([
@@ -57,14 +60,13 @@ class ObservationsApiController
             'datetime', [$start_date, $end_date]
         )->get();
 
-
         if ($observations->isEmpty()) {
             return response()->json(
-                ['message' => 'Observations from date ran ge are not found.'],
+                ['message' => 'Observations from date range are not found.'],
                 404
             );
         }
 
-        return response()->json($observations);
+        return new ObservationResourceCollection($observations);
     }
 }
