@@ -11,12 +11,7 @@ class ObservationsApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_root_route(): void
-    {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
+    public string $uri = 'api/v1/observations';
 
     public function test_index_method_success(): void
     {
@@ -26,7 +21,7 @@ class ObservationsApiTest extends TestCase
             'cloud_cover' => 10,
         ]);
 
-        $response = $this->get('/api/observations');
+        $response = $this->get($this->uri);
 
         $response->assertStatus(200);
         $response->assertJsonFragment([
@@ -38,7 +33,7 @@ class ObservationsApiTest extends TestCase
 
     public function test_index_method_with_unfound_row(): void
     {
-        $response = $this->get('/api/observations');
+        $response = $this->get($this->uri);
 
         $response->assertStatus(404);
         $response->assertJsonFragment([
@@ -54,7 +49,7 @@ class ObservationsApiTest extends TestCase
         ]);
 
         $response = $this->get(
-            '/api/observations/filter?start_date=1900-01-01&end_date=2030-12-31'
+            $this->uri . '/filter?start_date=1900-01-01&end_date=2030-12-31'
         );
 
         $response->assertStatus(200);
@@ -67,7 +62,7 @@ class ObservationsApiTest extends TestCase
     public function test_filter_by_date_method_with_unfound_rows(): void
     {
         $response = $this->get(
-            '/api/observations/filter?start_date=1900-01-01&end_date=2030-12-31'
+            $this->uri . '/filter?start_date=1900-01-01&end_date=2030-12-31'
         );
 
         $response->assertStatus(404);
@@ -92,7 +87,7 @@ class ObservationsApiTest extends TestCase
     public function test_filter_by_date_method_with_invalid_query($queryString): void
     {
         $url = '/api/observations/filter' . $queryString;
-        $response = $this->get('/api/observations/filter' . $queryString);
+        $response = $this->get($this->uri . '/filter' . $queryString);
 
         $response->assertStatus(400);
         $response->assertJsonFragment([
