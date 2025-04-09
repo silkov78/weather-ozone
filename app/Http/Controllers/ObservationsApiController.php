@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ObservationResource;
 use App\Models\Observation;
 use \Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
@@ -17,18 +18,17 @@ class ObservationsApiController
     /*
      * Возвращает последнее наблюдение.
      */
-    public function index(): JsonResponse
+    public function index(): ObservationResource|JsonResponse
     {
-        $lastObservation = Observation::all()->last();
+        $lastObservation = Observation::latest('datetime')->first();
 
         if (! $lastObservation) {
             return response()->json(
-                ['message' => 'Observations are not found.'],
-                404
+                ['message' => 'Observations are not found.'],404
             );
         }
 
-        return response()->json($lastObservation);
+        return new ObservationResource($lastObservation);
     }
 
     /*
@@ -60,7 +60,7 @@ class ObservationsApiController
 
         if ($observations->isEmpty()) {
             return response()->json(
-                ['message' => 'Observations from date range are not found.'],
+                ['message' => 'Observations from date ran ge are not found.'],
                 404
             );
         }
