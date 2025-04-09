@@ -22,7 +22,10 @@ class ObservationsApiController
         $lastObservation = Observation::all()->last();
 
         if (! $lastObservation) {
-            return response()->json(['message' => 'Observations are not found.'], 200);
+            return response()->json(
+                ['message' => 'Observations are not found.'],
+                404
+            );
         }
 
         return response()->json($lastObservation);
@@ -57,8 +60,8 @@ class ObservationsApiController
 
         if ($observations->isEmpty()) {
             return response()->json(
-                ['message' => 'Observations are not found.'],
-                200
+                ['message' => 'Observations from date range are not found.'],
+                404
             );
         }
 

@@ -36,12 +36,12 @@ class ObservationsApiTest extends TestCase
         ]);
     }
 
-    public function test_index_method_with_empty_db(): void
+    public function test_index_method_with_unfound_row(): void
     {
         $response = $this->get('/api/observations');
 
-        $response->assertStatus(200);
-        $response->assertJson([
+        $response->assertStatus(404);
+        $response->assertJsonFragment([
             'message' => 'Observations are not found.'
         ]);
     }
@@ -64,15 +64,15 @@ class ObservationsApiTest extends TestCase
         ]);
     }
 
-    public function test_filter_by_date_method_with_empty_db(): void
+    public function test_filter_by_date_method_with_unfound_rows(): void
     {
         $response = $this->get(
             '/api/observations/filter?start_date=1900-01-01&end_date=2030-12-31'
         );
 
-        $response->assertStatus(200);
+        $response->assertStatus(404);
         $response->assertJsonFragment([
-            'message' => 'Observations are not found.'
+            'message' => 'Observations from date range are not found.'
         ]);
     }
 
