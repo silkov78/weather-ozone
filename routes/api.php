@@ -1,17 +1,14 @@
 <?php
 
-use App\Http\Controllers\ObservationsApiController;
+use App\Http\Controllers\ObservationsController;
 use Illuminate\Support\Facades\Route;
 
 
 // api/v1/observations
-Route::prefix('v1/observations')->group(function () {
-    Route::controller(ObservationsApiController::class)->group(function () {
-        Route::name('observations.')->group(function () {
+Route::get(
+    '/v1/observations/filter', [ObservationsController::class, 'filterByDate']
+)->name('observations.filter');
 
-            Route::get('/', 'index')->name('index');
-            Route::get('/filter', 'filterByDate')->name('filter');
-
-        });
-    });
-});
+Route::apiResource(
+    'v1/observations', ObservationsController::class
+)->only(['index']);

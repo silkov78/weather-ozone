@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ObservationRequest;
@@ -9,14 +7,12 @@ use App\Http\Resources\ObservationResource;
 use App\Http\Resources\ObservationResourceCollection;
 use App\Models\Observation;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
-/*
- * Контроллер отвечает за API, предоставляющие данные о наблюдениях за озоном.
- */
-class ObservationsApiController
+class ObservationsController
 {
-    /*
-     * Возвращает последнее наблюдение.
+    /**
+     * Display a listing of the resource.
      */
     public function index(): ObservationResource|JsonResponse
     {
@@ -31,10 +27,6 @@ class ObservationsApiController
         return new ObservationResource($lastObservation);
     }
 
-    /*
-     * Возвращает наблюдения из заданного временного отрезка.
-     * start_date и end_date приходят в строке запроса.
-     */
     public function filterByDate(
         ObservationRequest $request
     ): ObservationResourceCollection|JsonResponse
@@ -54,5 +46,37 @@ class ObservationsApiController
         }
 
         return new ObservationResourceCollection($observations);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        //
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Observation $observation)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Observation $observation)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Observation $observation)
+    {
+        //
     }
 }
