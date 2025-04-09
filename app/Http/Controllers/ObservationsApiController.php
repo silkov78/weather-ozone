@@ -8,9 +8,7 @@ use App\Http\Requests\ObservationRequest;
 use App\Http\Resources\ObservationResource;
 use App\Http\Resources\ObservationResourceCollection;
 use App\Models\Observation;
-use \Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 /*
  * Контроллер отвечает за API, предоставляющие данные о наблюдениях за озоном.
@@ -41,13 +39,11 @@ class ObservationsApiController
         ObservationRequest $request
     ): ObservationResourceCollection|JsonResponse
     {
-        $validatedData = $request->validated();
-
-        $start_date = new \DateTime($validatedData['start_date']);
-        $end_date = new \DateTime($validatedData['end_date']);
+        $validated = $request->validated();
 
         $observations = Observation::whereBetween(
-            'datetime', [$start_date, $end_date]
+            'datetime',
+            [$validated['start_date'], $validated['end_date']]
         )->get();
 
         if ($observations->isEmpty()) {
