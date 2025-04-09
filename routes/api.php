@@ -1,8 +1,16 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\ObservationsApiController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
+
+// api/v1/observations
+Route::controller(ObservationsApiController::class)->group(function () {
+    Route::prefix('v1/observations')->group(function () {
+        Route::name('observations.')->group(function () {
+
+            Route::get('/', 'index')->name('index');
+            Route::get('/filter', 'filterByDate')->name('filter');
+        });
+    });
+});
