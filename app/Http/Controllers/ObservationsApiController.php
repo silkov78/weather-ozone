@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ObservationRequest;
 use App\Http\Resources\ObservationResource;
 use App\Http\Resources\ObservationResourceCollection;
 use App\Models\Observation;
@@ -37,21 +38,10 @@ class ObservationsApiController
      * start_date и end_date приходят в строке запроса.
      */
     public function filterByDate(
-        Request $request
+        ObservationRequest $request
     ): ObservationResourceCollection|JsonResponse
     {
-        try {
-            $validatedData = $request->validate([
-                'start_date' => 'required|date|date_format:Y-m-d',
-                'end_date' => 'required|date|date_format:Y-m-d|after_or_equal:start_date',
-            ]);
-        } catch (ValidationException $e)  {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Invalid query parameters.',
-                'errors' => $e->errors()
-            ], 400);
-        }
+        $validatedData = $request->validated();
 
         $start_date = new \DateTime($validatedData['start_date']);
         $end_date = new \DateTime($validatedData['end_date']);
