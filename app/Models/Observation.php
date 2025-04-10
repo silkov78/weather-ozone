@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Services\WeatherServiceProvider\Enums\WeatherCode;
@@ -20,7 +22,7 @@ class Observation extends Model
     ];
 
     protected $casts = [
-        'datetime' => 'datetime',
+        'datetime' => 'datetime:Y-m-d H:i:s',
         'temperature' => 'float',
         'cloud_cover' => 'int',
         'weather_code' => WeatherCode::class,

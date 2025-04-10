@@ -13,5 +13,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 // Schedule
-Schedule::job(ProcessOzoneJob::class)->everyMinute();
+//Schedule::job(ProcessOzoneJob::class)->everyMinute();
 //Schedule::job(SendNotificationJob::class)->everyTenSeconds();
